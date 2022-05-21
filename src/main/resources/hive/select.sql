@@ -1,0 +1,38 @@
+USE office;
+
+INSERT OVERWRITE DIRECTORY '/user/di/hive/select_1'
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t'
+SELECT * FROM Employee
+WHERE FirstName = 'Ольга';
+
+INSERT OVERWRITE DIRECTORY '/user/di/hive/select_2'
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t'
+SELECT * FROM Mission
+WHERE Executor > 4
+ORDER BY MissionID;
+
+INSERT OVERWRITE DIRECTORY '/user/di/hive/select_3'
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t'
+SELECT *
+FROM Mission AS M 
+FULL OUTER JOIN Employee AS E
+ON E.ServiceNumber = M.Author;
+
+INSERT OVERWRITE DIRECTORY '/user/di/hive/select_4'
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t'
+SELECT *
+FROM Position AS P
+JOIN Employee AS E
+ON E.PositionID = P.PositionID;
+
+INSERT OVERWRITE DIRECTORY '/user/di/hive/select_5'
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t'
+SELECT *
+FROM Mission M
+JOIN Employee E ON E.ServiceNumber = M.Executor
+WHERE E.FirstName LIKE '%а%';
